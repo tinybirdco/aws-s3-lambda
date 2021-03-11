@@ -1,0 +1,19 @@
+{
+    "LambdaFunctionConfigurations": [
+    {
+      "Id": "tb-lambda-function-s3-event-configuration",
+      "LambdaFunctionArn": "arn:aws:lambda:eu-west-3:473819596691:function:tb-lambda-import-function",
+      "Events": ["s3:ObjectCreated:Put"],
+      "Filter": {
+        "Key": {
+          "FilterRules": [
+            {
+              "Name": "suffix",
+              "Value": ".zip"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
