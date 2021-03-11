@@ -3,9 +3,11 @@
 TB_ROLE_NAME=tb-lambda-role
 TB_POLICY_NAME=tb-lambda-policy
 TB_FUNCTION_NAME=tb-lambda-import-function
-AWS_ACCOUNT_ID=473819596691
 TB_PERMISSION_ID=1
 S3_URI=s3://automatic-ingestion-poc/datasources/
+
+# Get account id number
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity | grep Account | awk '{print $2}' | grep -Eo '[0-9]+')
 
 # Create lambda role
 printf '=%.0s' {1..10} && echo -n '  Create lambda role  ' && printf '=%.0s' {1..10} && echo
