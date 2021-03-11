@@ -5,11 +5,11 @@
 Clone repo and execute: 
 
 ```bash
-    ./run.sh
+./run.sh
 ```
 
 In you want to clean the function, roles, policies and triggers:
 
 ```bash
-    ./clean_function.sh
+./clean_function.sh
 ```
