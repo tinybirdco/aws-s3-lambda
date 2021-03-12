@@ -4,10 +4,16 @@ TB_ROLE_NAME=tb-lambda-role
 TB_POLICY_NAME=tb-lambda-policy
 TB_FUNCTION_NAME=tb-lambda-import-function
 TB_PERMISSION_ID=1
-S3_URI=s3://automatic-ingestion-poc/datasources/
+TB_TOKEN=
+AWS_ACCOUNT_ID=
+S3_BUCKET=automatic-ingestion-poc
+S3_BUCKET_ARN=arn:aws:s3:::$S3_BUCKET
 
 # Get account id number
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity | grep Account | awk '{print $2}' | grep -Eo '[0-9]+')
+
+# Get tb_token from .tiny
+TB_TOKEN=$(cat .tinyb | json_pp | grep -oPm 1 '"token" : "\K[^"]+')
 
 # Create lambda role
 printf '=%.0s' {1..10} && echo -n '  Create lambda role  ' && printf '=%.0s' {1..10} && echo
@@ -45,12 +51,13 @@ echo -e
 
 # Create function
 printf '=%.0s' {1..10} && echo -n '  Create Lambda function  ' && printf '=%.0s' {1..10} && echo
-aws lambda create-function \ 
-  --function-name $TB_FUNCTION_NAME \ 
+aws lambda create-function \
+  --function-name $TB_FUNCTION_NAME \
   --zip-file fileb://tb-deployment-package.zip \
   --handler lambda_function.lambda_handler \
   --runtime python3.8 \
   --role arn:aws:iam::$AWS_ACCOUNT_ID:role/$TB_ROLE_NAME \
+  --environment Variables={TB_TOKEN=$TB_TOKEN} \
   2>&1
 echo -e
 
@@ -60,7 +67,7 @@ aws lambda add-permission \
 --function-name $TB_FUNCTION_NAME \
 --action lambda:InvokeFunction \
 --principal s3.amazonaws.com \
---source-arn $S3_URI \
+--source-arn $S3_BUCKET_ARN \
 --statement-id $TB_PERMISSION_ID \
   2>&1
 echo -e
@@ -68,7 +75,8 @@ echo -e
 # Add S3 Trigger (Notification)
 printf '=%.0s' {1..10} && echo -n '  Add S3 Trigger (Notification)  ' && printf '=%.0s' {1..10} && echo
 aws s3api put-bucket-notification-configuration \
---bucket $S3_URI \
+--bucket $S3_BUCKET \
 --notification-configuration file://s3trigger.json \
   2>&1
+echo -e
 

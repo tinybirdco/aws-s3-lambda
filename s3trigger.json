@@ -3,13 +3,17 @@
     {
       "Id": "tb-lambda-function-s3-event-configuration",
       "LambdaFunctionArn": "arn:aws:lambda:eu-west-3:473819596691:function:tb-lambda-import-function",
-      "Events": ["s3:ObjectCreated:Put"],
+      "Events": ["s3:ObjectCreated:*"],
       "Filter": {
         "Key": {
           "FilterRules": [
             {
               "Name": "suffix",
-              "Value": ".zip"
+              "Value": ".csv"
+            },
+            {
+              "Name": "prefix",
+              "Value": "datasources/"
             }
           ]
         }
