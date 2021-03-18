@@ -38,10 +38,14 @@ Run:
 
 Once finished, go to the AWS console and check the lambda function is there and the `TB_TOKEN` and `FILE_REGEXP` variables required to run the script are available.
 
-In you want to clean the function, roles, policies and triggers:
+Once deployed, you can just drop CSV files in the `S3_BUCKET` and they'll be automatically ingested to the corresponding Tinybird Data Source defined by the FILE_REGEXP environment variable, by default it uses as the Data Source name the part of the CSV file name before the first underscore character, otherwise it takes the CSV file name.
+
+![](output.gif)
+
+## How to delete the Lambda function
+
+If you want to clean the function, roles, policies and triggers:
 
 ```bash
 ./clean_function.sh
 ```
-
-![](output.gif)
