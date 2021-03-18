@@ -1,0 +1,19 @@
+{
+    "LambdaFunctionConfigurations": [
+    {
+      "Id": "tb-lambda-function-s3-event-configuration",
+      "LambdaFunctionArn": "arn:aws:lambda:$REGION_ID:$AWS_ACCOUNT_ID:function:$TB_FUNCTION_NAME",
+      "Events": ["s3:ObjectCreated:*"],
+      "Filter": {
+        "Key": {
+          "FilterRules": [
+            {
+              "Name": "suffix",
+              "Value": ".csv"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
