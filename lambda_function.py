@@ -13,7 +13,8 @@ from botocore.exceptions import ClientError
 s3_client = boto3.client('s3')
 
 # Tinybird datasource url
-url = f'https://api.tinybird.co/v0/datasources?'
+host = os.getenv('TB_HOST', 'https://api.tinybird.co')
+url = f'{host}/v0/datasources?'
 
 def process_name(key):
     key = key.replace('.csv', '')

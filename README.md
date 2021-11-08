@@ -22,11 +22,13 @@ TB_PERMISSION_ID=1
 FILE_REGEXP='^[^_]+(?=_)'
 # Tinybird token with DATASOURCE:CREATE permission (or admin token). Get it from https://ui.tinybird.co/tokens
 TB_TOKEN=
+# Tinybird API host. It depends on the region or if you have a dedicated host (eu=https://api.tinybird.co) (us-east=https://api.us-east.tinybird.co) default is `eu` host
+TB_HOST=
 # The name of the S3 bucket to listen to. Files need to be in the root of the bucket
 S3_BUCKET=
 ```
 
-Most of the variables are provided with default values, so you just have to indicate `TB_TOKEN` to ingest to your Tinybird account and `S3_BUCKET`.
+Most of the variables are provided with default values, so you just have to indicate `TB_TOKEN` to ingest to your Tinybird account and `S3_BUCKET`. TB_HOST is `https://api.tinybird.co` by default, just set it if your account is in a different region than `eu`
 
 ## How to use it
 
