@@ -63,7 +63,7 @@ aws lambda create-function \
   --handler lambda_function.lambda_handler \
   --runtime python3.8 \
   --role arn:aws:iam::$AWS_ACCOUNT_ID:role/$TB_ROLE_NAME \
-  --environment '{ "Variables": { "TB_TOKEN": "'"$TB_TOKEN"'", "FILE_REGEXP": "'"$FILE_REGEXP"'" } }' \
+  --environment '{ "Variables": { "TB_TOKEN": "'"$TB_TOKEN"'", "FILE_REGEXP": "'"$FILE_REGEXP"'", "TB_HOST": "'"$TB_HOST"'" } }' \
   2>&1
 echo -e
 
